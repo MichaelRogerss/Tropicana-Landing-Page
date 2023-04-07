@@ -243,3 +243,23 @@ body {
 .selectSlide>span.isactive{
     background-color: #FFF;
 }
+
+.loader{
+    position: absolute;
+    width:100%;
+    height:100vh;
+    background-color:var(--pina);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.loader>svg{
+    animation: spin 4s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

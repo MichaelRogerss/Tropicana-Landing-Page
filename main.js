@@ -5,7 +5,33 @@ const slides = document.querySelectorAll('.slide');
 const selectors = document.querySelectorAll('.selector');
 
 var activeSlide = 0;
-document.getElementById("im2").classList.add("show")
+
+const spinLeafs = () => {
+    const elements = document.querySelectorAll('.leaf');
+
+        
+        elements.forEach(element => {
+        
+        const currentRotation = getComputedStyle(element).getPropertyValue('transform');
+
+        
+        const match = currentRotation.match(/matrix\((.*)\)/);
+        const matrix = match ? match[1].split(',') : [0, 0, 0, 0, 0, 0];
+        const angle = Math.round(Math.atan2(matrix[1], matrix[0]) * (180 / Math.PI));
+
+        
+        element.style.transform = `rotate(${angle + 80}deg)`;
+        });
+}
+window.addEventListener('load', function() {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = 0;
+    setTimeout(() => {
+        loader.remove();
+    document.getElementById("im2").classList.add("show")
+        spinLeafs();
+    }, 500); 
+    });
 Array.from(selectors).forEach((selector, index) => {
   selector.addEventListener('click', () => {
 
@@ -37,21 +63,7 @@ Array.from(selectors).forEach((selector, index) => {
             document.getElementsByClassName("sliderFrame")[0].style.backgroundColor = 'var(--mango)'
         }
         
-        const elements = document.querySelectorAll('.leaf');
-
-        
-        elements.forEach(element => {
-        
-        const currentRotation = getComputedStyle(element).getPropertyValue('transform');
-
-        
-        const match = currentRotation.match(/matrix\((.*)\)/);
-        const matrix = match ? match[1].split(',') : [0, 0, 0, 0, 0, 0];
-        const angle = Math.round(Math.atan2(matrix[1], matrix[0]) * (180 / Math.PI));
-
-        
-        element.style.transform = `rotate(${angle + 80}deg)`;
-        });
+        spinLeafs();
         slider.scroll({
             left: slideTo.offsetLeft,
             behavior: 'smooth'
